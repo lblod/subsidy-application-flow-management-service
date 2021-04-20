@@ -26,6 +26,8 @@ Provided [environment variables](https://docs.docker.com/compose/environment-var
 
 > **PATCH** `/flow/next-step/:uuid`
 
+`uuid` being the uuid of a subsidy measure consumption
+
 ## Development
 
 For a more detailed look in how to develop a microservices based on
