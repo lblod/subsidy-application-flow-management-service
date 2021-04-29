@@ -1,6 +1,6 @@
 {
   "name": "subsidy-application-flow-management-service",
-  "version": "0.1.0",
+  "version": "0.2.0-beta",
   "description": "Service that manages the application flow of subsidies.",
   "main": "app.js",
   "scripts": {
