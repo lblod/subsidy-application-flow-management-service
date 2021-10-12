@@ -16,10 +16,9 @@ app.get('/', function(req, res) {
 });
 
 app.patch('/flow/next-step/:uuid', async function(req, res, next) {
+  const uuid = req.params.uuid;
   try {
-    const uuid = req.params.uuid;
     const subsidyMeasureConsumption = await getSubsidyMeasureConsumption(uuid);
-
     if (subsidyMeasureConsumption) {
       const currentStep = await getCurrentStep(subsidyMeasureConsumption);
       if (currentStep) {
