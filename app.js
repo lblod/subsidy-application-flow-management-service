@@ -1,13 +1,15 @@
 import { app, errorHandler } from 'mu';
 import { SERVICE_NAME } from './lib/env';
-import { SEMANTIC_FORM_STATUS } from './lib/constants';
+import { CONSUMPTION_STATUS, SEMANTIC_FORM_STATUS } from './lib/constants';
 import {
   getSubsidyMeasureConsumption,
   activeFormHasStatus,
   getCurrentStep,
   getNextStep,
   updateActiveStep,
-  generateNotification
+  generateNotification,
+  updateConsumptionStatus,
+  isLastStep,
 } from './lib/queries';
 
 app.get('/', function(req, res) {
@@ -27,6 +29,10 @@ app.patch('/flow/next-step/:uuid', async function(req, res, next) {
           const nextStep = await getNextStep(currentStep);
           await updateActiveStep(subsidyMeasureConsumption, nextStep);
           await generateNotification(subsidyMeasureConsumption, currentStep, nextStep);
+          await updateConsumptionStatus(subsidyMeasureConsumption, CONSUMPTION_STATUS.ACTIVE);
+          if(await isLastStep(currentStep)) {
+            await updateConsumptionStatus(subsidyMeasureConsumption, CONSUMPTION_STATUS.SENT);
+          }
           return res.status(204).send();
         } else {
           return res.status(403).send({ title: `Active form of ${subsidyMeasureConsumption} has not been submitted` });
