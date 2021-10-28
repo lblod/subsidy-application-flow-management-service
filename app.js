@@ -20,6 +20,7 @@ app.get('/', function(req, res) {
   res.send(message);
 });
 
+// TODO not a fan of the 'flow' in front, forced due to current dispatcher configuration.
 app.post('/flow/consumption/:id/step/:order/open', async function(req, res, next) {
   const id = req.params.id;
   const order = req.params.order;
